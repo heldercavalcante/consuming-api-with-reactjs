@@ -1,0 +1,93 @@
+.container-list {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  padding: 30px;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px #0e1111be;
+}
+
+
+h1 {
+  color: black;
+  text-align: center;
+  text-shadow: 1px 1px 2px #121616;
+  margin-bottom: 20px;
+
+}
+
+tbody > tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+td{
+  text-align: center;
+  color: black;
+}
+
+th{
+  text-align: center;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.container-create {
+   width: 100%;
+   text-decoration: none;
+}
+
+.container-create button {
+  background-color: rgba(21, 114, 21, 0.897);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 4px;
+  border: 0;
+  margin-bottom: 10px;
+}
+
+.container-create p{
+  display: contents;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+
+.action {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-edit {
+  margin-right: 10px;
+}
+
+.button-edit Button{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 63px;
+  
+}
+.button-edit p{
+  justify-content: center;
+  align-items: center;
+  display: contents;
+  font-size: 13px; 
+}
+
