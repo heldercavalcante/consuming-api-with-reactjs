@@ -1,5 +1,5 @@
 .container-list {
-  height: 80vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,6 +24,7 @@ tbody > tr:nth-child(odd) {
   background-color: lightgray;
 }
 
+
 td{
   text-align: center;
   color: black;
@@ -35,6 +36,7 @@ th{
 
 .link {
   text-decoration: none;
+  display: contents;
 }
 
 .container-create {

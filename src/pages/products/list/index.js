@@ -7,46 +7,67 @@ import './list.css';
 import { FiTrash } from 'react-icons/fi'
 import { BsPlus } from "react-icons/bs";
 import { MdOutlineModeEdit } from "react-icons/md";
+import Pagination from '../../../components/Pagination/Pagination';
 
 
 function Product() {
-  console.log('1 - iniciou o componente')
-
   //useState é utilizado para renderizar a tela de acordo com as mudanças do estado da variavel
   //toda vez que seu estado for alterado será recarregado a tela
+  // const queryParams = new URLSearchParams(window.location.search);
+  // const pageURL = queryParams.get('page');
+  // console.log('pageURL: ',pageURL)
+
+  const [currentPage, setCurrentPage] = useState(1);
+  console.log('currentPage: ',currentPage)
+  const pageSize = 10
+
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
-  console.log('2- valor inicial: ',products)
 
   //a função async ou assíncrona é executada em segundo plano ou seja o projeto continua rodando 
   //ao mesmo tempo em que a função está sendo executada. De forma que o projeto não ira parar
   //aguardando o resultado da função, ele ira continuar rodando enquanto a função roda tambem
   //por baixo dos panos ate receber o seu valor.
   async function loadProducts() {
+    console.log('executou o loadProducts',`http://localhost:8000/products?page=${currentPage}&size=${pageSize}`)
     setLoadingProducts(true)
-    console.log('4 - antes de carregar os produtos do backend')
-    const response = await axios.get('http://localhost:8000/products')
+    const request = await axios.get(`http://localhost:8000/products?page=${currentPage}&size=${pageSize}`)
+    const response = request
     setProducts(response.data)
-    setLoadingProducts(false)
-    console.log('6 - depois que carregou os produtos do backend ', products)    
+    setLoadingProducts(false)   
   }
+
+
+  if ( products.total % products.size === 0) {
+    var pages_quantity = (products.total / products.size)
+  } else {
+    pages_quantity = (Math.floor(products.total / products.size))+1
+  }
+
+  //   if ( products.total % products.count === 0) {
+  //   var pages_quantity = (products.total / products.count)
+  // } else if (currentPage === null) {
+  //   pages_quantity = (8)
+  // } else {
+  //   pages_quantity = (Math.floor(products.total / products.count))+1
+  // }
 
   async function deleteProducts(id) {
    await axios.delete(`http://localhost:8000/products/${id}`, console.log('executou'))  
-   window.location.reload(); 
+   loadProducts() 
   }
 
   
   //Executada somente uma vez quando o componente é iniciado
   useEffect(() => {
-    console.log('3 - iniciou o useEffect')
     loadProducts()
-    console.log('5 - executou o useEffect')
   },[]);
 
   useEffect(() => {
-    console.log('mudou a variavel products')
-  },[products]);
+    console.log('alterou a pagina', currentPage)
+    loadProducts()
+  },[currentPage]);
+
 
   return (
     <div className='container'>
@@ -67,20 +88,18 @@ function Product() {
             <th>Product Name</th>
             <th>Product Details</th>
             <th>Product Price</th>
-            <th>Product Size</th>
             <th>User ID</th>
             <th>Action</th>
           </tr>
           </thead>
           <tbody>
-          {products.map((product) => {
+          {products.items.map((product) => {
             return (
-              <tr>
+              <tr key={product.id.toString()}>
                 <td>{product.id}</td>
                 <td>{product.name}</td>
                 <td>{product.details}</td>
                 <td>{product.price}</td>
-                <td>{product.size}</td>
                 <td>{product.user_id}</td>
                 <td className='action'>
                   <div className='button-edit'>
@@ -97,6 +116,16 @@ function Product() {
           })}
           </tbody>
         </table>
+        <div>
+          <Pagination  
+          pagesQuantity={pages_quantity}
+          count={products.size}
+          currentPage={currentPage}
+          total={products.total}
+          setCurrentPage={setCurrentPage}
+          pageSize={pageSize}
+          />
+        </div>
       </div>
         )
     }

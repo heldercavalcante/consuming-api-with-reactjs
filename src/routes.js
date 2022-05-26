@@ -9,7 +9,7 @@ function RoutesApp() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/products" element={<Product/>}/>
+        <Route path="/products/" element={<Product/>}/>
         <Route path="/products/create" element={<CreateProduct/>}/>
         <Route path="products/update/:id" element={<UpdateProduct/>}/>
       </Routes>
